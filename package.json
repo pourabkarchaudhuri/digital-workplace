@@ -1,0 +1,26 @@
+{
+  "name": "hex-ar-brochure",
+  "version": "1.0.0",
+  "description": "server side api for ar brochure",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KenrickV-Hexaware/Hex-AR-Brochure.git"
+  },
+  "author": "Kenrick Vaz, Pourab Karchaudhuri",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KenrickV-Hexaware/Hex-AR-Brochure/issues"
+  },
+  "homepage": "https://github.com/KenrickV-Hexaware/Hex-AR-Brochure#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "dotenv": "^5.0.1",
+    "express": "^4.16.3",
+    "morgan": "^1.9.0",
+    "request": "^2.85.0"
+  }
+}
