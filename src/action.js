@@ -1,4 +1,4 @@
-let googleAssistant = require('actions-on-google').ApiAiApp;
+var ApiAiApp = require('actions-on-google').ApiAiApp;
 
 module.exports = {
     'ActionTrigger': function(req, res, event, action, actionIncomplete, parameters, source, callback){
@@ -30,7 +30,7 @@ module.exports = {
                     callback(null, ResponseBuilderTelephony(speechString))
                 }
                 else if(source == 'google'){
-                    const assistant = new googleAssistant({request: req, response: res});
+                    const assistant = new ApiAiApp({request: req, response: res});
                     ResponseBuilderGoogleAssistantCard(assistant, output);
                 }
             }
@@ -47,6 +47,7 @@ module.exports = {
     }
 }
 
+//---------------------------------------------RESPONSE BUILDERS--------------------------------------
 function ResponseBuilderTelephony(data){
     console.log("Framing Telephony Speech with Data : " + data);
     return {
