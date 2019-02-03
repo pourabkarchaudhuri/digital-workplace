@@ -14,7 +14,7 @@ module.exports = {
                 //Call Service Now with above response params
                 //Pass on required formatted response from Service Now below in 'output'
 
-                
+
                 let output = {
                     ticketNumber: 'INC4100321',
                     impact: 'low',
@@ -27,6 +27,9 @@ module.exports = {
                 else if(source == 'GOOGLE_TELEPHONY'){
                     let speechString = 'The incident request is raised for ticket number ' + output.ticketNumber + ' with a ' + output.severity + ' severity. It will be resolved shortly. Is there anything else I can help you with?';
                     callback(null, ResponseBuilderTelephony(speechString))
+                }
+                else if(source == 'google'){
+                    callback(null, ResponseBuilderGoogleAssistantCard(output));
                 }
             }
             else{
@@ -47,6 +50,29 @@ function ResponseBuilderTelephony(data){
     return {
         fulfillmentText : data
     }
+}
+
+function ResponseBuilderGoogleAssistantCard(data){
+    console.log("Framing Google Assistant Card with Data : " + data);
+    let card = {
+        "fulfillmentText": "This is a text response",
+        "fulfillmentMessages": [
+            {
+            "card": {
+                "title": "card title",
+                "subtitle": "card text",
+                "imageUri": "https://assistant.google.com/static/images/molecule/Molecule-Formation-stop.png",
+                "buttons": [
+                {
+                    "text": "button text",
+                    "postback": "hi"
+                }
+                ]
+            }
+            }
+        ]
+    }
+    return card;
 }
 
 
