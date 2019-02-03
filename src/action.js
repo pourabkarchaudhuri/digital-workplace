@@ -55,40 +55,51 @@ function ResponseBuilderTelephony(data){
 function ResponseBuilderGoogleAssistantCard(data){
     console.log("Framing Google Assistant Card with Data : " + data);
     let card = {
-        "payload": {
-          "google": {
-            "expectUserResponse": true,
-            "richResponse": {
-              "items": [
-                {
-                  "simpleResponse": {
-                    "textToSpeech": "this is a simple response"
-                  }
-                },
-                {
-                    "basicCard": {
-                        "title": "Math & prime numbers",
-                        "formattedText": "42 is an even composite number. It\n    is composed of three distinct prime numbers multiplied together. It\n    has a total of eight divisors. 42 is an abundant number, because the\n    sum of its proper divisors 54 is greater than itself. To count from\n    1 to 42 would take you about twenty-one…",
-                        "image": {
-                            "url": "https://example.google.com/42.png",
-                            "accessibilityText": "Image alternate text"
-                        },
-                        "buttons": [
-                            {
-                                "title": "Read more",
-                                "openUrlAction": {
-                                    "url": "https://example.google.com/mathandprimes"
-                                }
+        "data":{
+            "google":{
+                "expectUserResponse":true,
+                "noInputPrompts":[
+    
+                ],
+                "richResponse":{
+                    "items":[
+                        {
+                            "simpleResponse":{
+                                "textToSpeech":"Welcome to this Basic Card",
+                                "displayText":"Welcome to this Basic Card"
                             }
-                        ],
-                        "imageDisplayOptions": "CROPPED"
-                    }
+                        },
+                        {
+                            "basicCard":{
+                                "buttons":[
+                                    {
+                                        "title":"Button Title",
+                                        "openUrlAction":{
+                                            "url":"https://some.url"
+                                        }
+                                    }
+                                ],
+                                "formattedText":"Some text",
+                                "image":{
+                                    "url":"hhttp://www.seriosoft.com/sites/default/files/feature-icons/incident_management.png",
+                                    "accessibilityText":"Accessibility text describing the image"
+                                },
+                                "title":"Card Title"
+                            }
+                        }
+                    ],
+                    "suggestions":[
+                        {
+                            "title":"Aléatoire"
+                        },
+                        {
+                            "title":"Top"
+                        }
+                    ]
                 }
-              ]
             }
-          }
         }
-      }
+    }
     return card;
 }
 
