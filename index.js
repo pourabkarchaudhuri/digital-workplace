@@ -48,7 +48,7 @@ app.post('/v1/api/query', function(req, res) {
     if(req.body.hasOwnProperty('originalDetectIntentRequest')){
       console.log('Platform Webhook Detected');
 
-      channelHandler.DetectChannel(req, res, req.body, 'CHANNEL', (err, result) => {
+      channelHandler.DetectChannel(req.body, 'CHANNEL', (err, result) => {
         res.json(result);
       })
     }
@@ -59,7 +59,7 @@ app.post('/v1/api/query', function(req, res) {
           console.log("Respond with Server Unavailable");
         }
         else{
-          channelHandler.DetectChannel(req, res, response, 'API', (err, result) => {
+          channelHandler.DetectChannel(response, 'API', (err, result) => {
             res.json(result);
           })
         }
