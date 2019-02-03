@@ -45,7 +45,7 @@ app.post('/v1/api/query', function(req, res) {
     console.log("Incoming payload!")
     console.log(JSON.stringify(req.body))
 
-    if(payload.hasOwnProperty('originalDetectIntentRequest')){
+    if(req.body.hasOwnProperty('originalDetectIntentRequest')){
       console.log('Platform Webhook Detected');
 
       channelHandler.ChannelParser(req.body, 'CHANNEL', (err, result) => {
