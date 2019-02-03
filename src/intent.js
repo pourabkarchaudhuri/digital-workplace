@@ -2,7 +2,7 @@
 module.exports = {
     'IntentParser': function(payload, callback){
         console.log('Intent Response : ' + JSON.stringify(payload));
-        console.log('Intent Name : ', payload.result.action);
+        
 
         
         
@@ -16,6 +16,7 @@ module.exports = {
         }
         else{
             console.log("Response from Exposed API");
+            console.log('Intent Name : ', payload.result.action);
             var action = payload.result.action;
             var actionIncomplete = payload.result.actionIncomplete;
             var parameters = payload.result.parameters; 
