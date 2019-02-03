@@ -1,31 +1,36 @@
 module.exports = {
     'ActionTrigger': function(event, action, actionIncomplete, parameters, source, callback){
+        if(source != 'API'){
+            actionIncomplete = false;
+        }
+
+        
         if(action == "IncidentRequest"){
             console.log("Incident Request Intent Triggered!");
-            if(source == 'API'){
-                if(!actionIncomplete){
-                    console.log("Params fulfilled");
-                    //Call ML Model with REST and Get its response
-                    //Call Service Now with above response params
-                    //Pass on required formatted response from Service Now below in 'output'
-    
-                    let output = {
-                        ticketNumber: 'INC4100321',
-                        impact: 'low',
-                        severity: 'medium',
-                        category: 'inquiry'
-                    }
-                    
+            
+            if(!actionIncomplete){
+                console.log("Params fulfilled");
+                //Call ML Model with REST and Get its response
+                //Call Service Now with above response params
+                //Pass on required formatted response from Service Now below in 'output'
+
+                let output = {
+                    ticketNumber: 'INC4100321',
+                    impact: 'low',
+                    severity: 'medium',
+                    category: 'inquiry'
+                }
+                if(source == 'API'){
                     callback(null, ResponseBuilderCard(output))
                 }
-                else{
-                    console.log("Asking Prompts");
-                    callback(null, event);
+                else if(source == 'GOOGLE_TELEPHONY'){
+                    let speechString = 'The incident request is raised for ticket number ' + output.ticketNumber + ' with a ' + output.severity + ' severity. It will be resolved shortly. Is there anything else I can help you with?';
+                    callback(null, ResponseBuilderTelephony(speechString))
                 }
             }
-            else if(source == 'GOOGLE_TELEPHONY'){
-                let speechString = 'The incident request is raised for ticket number ' + output.ticketNumber + ' with a ' + output.severity + ' severity. It will be resolved shortly. Is there anything else I can help you with?';
-                callback(null, ResponseBuilderTelephony(speechString))
+            else{
+                console.log("Asking Prompts");
+                callback(null, event);
             }
         }
         else{
