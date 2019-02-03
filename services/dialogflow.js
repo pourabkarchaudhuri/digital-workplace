@@ -3,7 +3,7 @@
 var request = require('request')
 
 module.exports = {
-  'ConversationHandler': function(payload, callback) {
+  'DialogflowAPI': function(payload, callback) {
       // console.log("Outgoing Query to AI : " + payload.query)
       var options = { method: 'POST',
         url: 'https://api.dialogflow.com/v1/query',

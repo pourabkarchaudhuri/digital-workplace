@@ -11,9 +11,9 @@ app.use('/logs', scribe.webPanel());
 
 require('dotenv').config()
 
-var ai = require('./services/conversation')
-var intent = require('./src/intent');
-var webhook = require('./src/channel');
+var aiHandler = require('./services/dialogflow')
+var channelHandler = require('./src/channel');
+var webhook = require('./src/webhook');
 
 app.use(morgan('common'));
 app.use(scribe.express.logger());
@@ -45,32 +45,43 @@ app.post('/v1/api/query', function(req, res) {
     console.log("Incoming payload!")
     console.log(JSON.stringify(req.body))
 
-    ai.ConversationHandler(req.body, (err, result)=>{
-      if(err){
-        console.log("Respond with Server Unavailable");
-      }
-      else{
-        intent.IntentParser(result, (err, result) => {
-          res.json(result);
-        })
-      }
-    })
-});
+    if(payload.hasOwnProperty('originalDetectIntentRequest')){
+      console.log('Platform Webhook Detected');
 
-app.post('/v1/api/webhook', function(req, res) {
-  console.log("Incoming Channel!")
-  webhook.ChannelParser(req.body, (err, result)=>{
-    if(err){
-      console.log("Respond with Server Unavailable");
+      channelHandler.ChannelParser(req.body, 'CHANNEL', (err, result) => {
+        res.json(result);
+      })
     }
     else{
-      // intent.IntentParser(result, (err, result) => {
-      //   res.json(result);
-      // })
-      res.json(result)
+      console.log("API Request Detected");
+      aiHandler.DialogflowAPI(req.body, (err, response)=>{
+        if(err){
+          console.log("Respond with Server Unavailable");
+        }
+        else{
+          channelHandler.DetectChannel(response, 'API', (err, result) => {
+            res.json(result);
+          })
+        }
+      })
     }
-  })
+    
 });
+
+// app.post('/v1/api/webhook', function(req, res) {
+//   console.log("Incoming Channel!")
+//   webhook.IntentParser(req.body, (err, result)=>{
+//     if(err){
+//       console.log("Respond with Server Unavailable");
+//     }
+//     else{
+//       // intent.IntentParser(result, (err, result) => {
+//       //   res.json(result);
+//       // })
+//       res.json(result)
+//     }
+//   })
+// });
 
 app.listen(port);
 console.log("Server started successfully at PORT : " + port);
