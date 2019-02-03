@@ -55,23 +55,21 @@ function ResponseBuilderTelephony(data){
 function ResponseBuilderGoogleAssistantCard(data){
     console.log("Framing Google Assistant Card with Data : " + data);
     let card = {
-        "fulfillmentText": "This is a text response",
-        "fulfillmentMessages": [
-            {
-            "card": {
-                "title": "card title",
-                "subtitle": "card text",
-                "imageUri": "https://assistant.google.com/static/images/molecule/Molecule-Formation-stop.png",
-                "buttons": [
+        "payload": {
+          "google": {
+            "expectUserResponse": true,
+            "richResponse": {
+              "items": [
                 {
-                    "text": "button text",
-                    "postback": "hi"
+                  "simpleResponse": {
+                    "textToSpeech": "this is a simple response"
+                  }
                 }
-                ]
+              ]
             }
-            }
-        ]
-    }
+          }
+        }
+      }
     return card;
 }
 
