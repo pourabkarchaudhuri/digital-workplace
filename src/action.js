@@ -4,7 +4,7 @@ module.exports = {
             actionIncomplete = false;
         }
 
-        
+
         if(action == "IncidentRequest"){
             console.log("Incident Request Intent Triggered!");
             
@@ -14,6 +14,7 @@ module.exports = {
                 //Call Service Now with above response params
                 //Pass on required formatted response from Service Now below in 'output'
 
+                
                 let output = {
                     ticketNumber: 'INC4100321',
                     impact: 'low',
