@@ -13,6 +13,7 @@ require('dotenv').config()
 
 var ai = require('./services/conversation')
 var intent = require('./src/intent');
+var webhook = require('./src/channel');
 
 app.use(morgan('common'));
 app.use(scribe.express.logger());
@@ -56,10 +57,20 @@ app.post('/v1/api/query', function(req, res) {
     })
 });
 
-// app.post('/v1/api/channel', function(req, res) {
-//   console.log("Incoming Channel!")
-//   console.log(JSON.stringify(req.body))
-// });
+app.post('/v1/api/webhook', function(req, res) {
+  console.log("Incoming Channel!")
+  webhook.ChannelParser(req.body, (err, result)=>{
+    if(err){
+      console.log("Respond with Server Unavailable");
+    }
+    else{
+      // intent.IntentParser(result, (err, result) => {
+      //   res.json(result);
+      // })
+      res.json(result)
+    }
+  })
+});
 
 app.listen(port);
 console.log("Server started successfully at PORT : " + port);

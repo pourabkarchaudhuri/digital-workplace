@@ -2,45 +2,31 @@
 module.exports = {
     'IntentParser': function(payload, callback){
         console.log('Intent Response : ' + JSON.stringify(payload));
-        
+        console.log('Intent Name : ', payload.result.action);
 
+        var action = payload.result.action;
+        var actionIncomplete = payload.result.actionIncomplete;
+        var parameters = payload.result.parameters;
         
-        
-        if(payload.hasOwnProperty('originalDetectIntentRequest')){
-            if(payload.originalDetectIntentRequest.source == "GOOGLE_TELEPHONY"){
-                console.log("Response from Telephone!");
-                callback(null, {
-                    fulfillmentText : "This is the response for telephony"
-                })
-            }
-        }
-        else{
-            console.log("Response from Exposed API");
-            console.log('Intent Name : ', payload.result.action);
-            var action = payload.result.action;
-            var actionIncomplete = payload.result.actionIncomplete;
-            var parameters = payload.result.parameters; 
-            if(action == "IncidentRequest"){
-                console.log("Incident Request Intent Triggered!");
-                if(!actionIncomplete){
-                    console.log("Params fulfilled");
-                    //Call ML Model with REST and Get its response
-                    //Call Service Now with above response params
-                    //Pass on required formatted response from Service Now below::
-    
-                    callback(null, ResponseBuilderCard(parameters))
-                }
-                else{
-                    console.log("Asking Prompts");
-                    callback(null, payload);
-                }
+        if(action == "IncidentRequest"){
+            console.log("Incident Request Intent Triggered!");
+            if(!actionIncomplete){
+                console.log("Params fulfilled");
+                //Call ML Model with REST and Get its response
+                //Call Service Now with above response params
+                //Pass on required formatted response from Service Now below::
+
+                callback(null, ResponseBuilderCard(parameters))
             }
             else{
-                console.log("Bypass Uninteractive Intents");
+                console.log("Asking Prompts");
                 callback(null, payload);
             }
         }
-
+        else{
+            console.log("Bypass Uninteractive Intents");
+            callback(null, payload);
+        }
         
     }
 }
