@@ -7,7 +7,7 @@ module.exports = {
             if(payload.originalDetectIntentRequest.source == "GOOGLE_TELEPHONY"){
                 console.log("Telephony Input");
                 callback(null, {
-                    fulfillmentText: "This is the server response";
+                    fulfillmentText: "This is the server response"
                 })
             }
         }
