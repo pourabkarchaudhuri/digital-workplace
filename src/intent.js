@@ -4,9 +4,7 @@ module.exports = {
         console.log('Intent Response : ' + JSON.stringify(payload));
         console.log('Intent Name : ', payload.result.action);
 
-        var action = payload.result.action;
-        var actionIncomplete = payload.result.actionIncomplete;
-        var parameters = payload.result.parameters;
+        
         
         if(payload.hasOwnProperty('originalDetectIntentRequest')){
             if(payload.originalDetectIntentRequest.source == "GOOGLE_TELEPHONY"){
@@ -18,6 +16,9 @@ module.exports = {
         }
         else{
             console.log("Response from Exposed API");
+            var action = payload.result.action;
+            var actionIncomplete = payload.result.actionIncomplete;
+            var parameters = payload.result.parameters; 
             if(action == "IncidentRequest"){
                 console.log("Incident Request Intent Triggered!");
                 if(!actionIncomplete){
