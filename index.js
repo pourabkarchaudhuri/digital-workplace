@@ -56,10 +56,10 @@ app.post('/v1/api/query', function(req, res) {
     })
 });
 
-app.post('/v1/api/channel', function(req, res) {
-  console.log("Incoming Channel!")
-  console.log(JSON.stringify(req.body))
-});
+// app.post('/v1/api/channel', function(req, res) {
+//   console.log("Incoming Channel!")
+//   console.log(JSON.stringify(req.body))
+// });
 
 app.listen(port);
 console.log("Server started successfully at PORT : " + port);
