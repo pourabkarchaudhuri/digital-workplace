@@ -1,26 +1,27 @@
 {
-  "name": "hex-ar-brochure",
+  "name": "tau-chatserver",
   "version": "1.0.0",
-  "description": "server side api for ar brochure",
-  "main": "app.js",
+  "description": "server side api for tau",
+  "main": "index.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/KenrickV-Hexaware/Hex-AR-Brochure.git"
+    "url": ""
   },
-  "author": "Kenrick Vaz, Pourab Karchaudhuri",
+  "author": "Pourab Karchaudhuri",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/KenrickV-Hexaware/Hex-AR-Brochure/issues"
+    "url": ""
   },
-  "homepage": "https://github.com/KenrickV-Hexaware/Hex-AR-Brochure#readme",
+  "homepage": "",
   "dependencies": {
     "body-parser": "^1.18.2",
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
     "morgan": "^1.9.0",
-    "request": "^2.85.0"
+    "request": "^2.85.0",
+    "scribe-js": "^2.0.4"
   }
 }
