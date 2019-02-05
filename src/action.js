@@ -1,3 +1,6 @@
+var classifierHandler = require('../services/ticketClassifier');
+var itsmHandler = require('../services/serviceNow');
+
 module.exports = {
     'ActionTrigger': function(event, action, actionIncomplete, parameters, source, callback){
         if(source != 'API'){
@@ -14,23 +17,46 @@ module.exports = {
                 //Call Service Now with above response params
                 //Pass on required formatted response from Service Now below in 'output'
 
+                classifierHandler.GetClassification(parameters, (err, classifiedData) => {
 
-                let output = {
-                    ticketNumber: 'INC4100321',
-                    impact: 'low',
-                    severity: 'medium',
-                    category: 'inquiry'
-                }
-                if(source == 'API'){
-                    callback(null, ResponseBuilderCard(output))
-                }
-                else if(source == 'GOOGLE_TELEPHONY'){
-                    let speechString = 'The incident request is raised for ticket number ' + output.ticketNumber + ' with a ' + output.severity + ' severity. It will be resolved shortly. Is there anything else I can help you with?';
-                    callback(null, ResponseBuilderTelephony(speechString))
-                }
-                else if(source == 'google'){
-                    callback(null, ResponseBuilderGoogleAssistantCard(output));
-                }
+                    if(err){
+                        //Handle Error Message
+                    }
+                    else{
+                        itsmHandler.PostIncident(classifiedData, (err, itsmData) => {
+                            if(err){
+                                //Handle Error message
+                            }
+                            else{
+                                let output = {
+                                    ticketNumber: itsmData.result.number,
+                                    impact: itsmData.result.impact,
+                                    severity: itsmData.result.severity,
+                                    category: itsmData.result.category,
+                                    subCategory: itsmData.result.subcategory
+                                }
+
+                                if(source == 'API'){
+                                    callback(null, ResponseBuilderCard(output))
+                                }
+                                else if(source == 'GOOGLE_TELEPHONY'){
+                                    let speechString = 'The incident request is raised for ticket number ' + output.ticketNumber + ' with a ' + output.severity + ' severity. It will be resolved shortly. Is there anything else I can help you with?';
+                                    callback(null, ResponseBuilderTelephony(speechString))
+                                }
+                                else if(source == 'google'){
+                                    callback(null, ResponseBuilderGoogleAssistantCard(output));
+                                }
+                            }
+    
+                        })
+                    }
+                    
+                })
+
+
+
+                
+
             }
             else{
                 console.log("Asking Prompts");
