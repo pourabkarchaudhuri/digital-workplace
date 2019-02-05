@@ -21,6 +21,7 @@ module.exports = {
 
                     if(err){
                         //Handle Error Message
+                        
                     }
                     else{
                         itsmHandler.PostIncident(classifiedData, (err, itsmData) => {
@@ -40,11 +41,12 @@ module.exports = {
                                     callback(null, ResponseBuilderCard(output))
                                 }
                                 else if(source == 'GOOGLE_TELEPHONY'){
-                                    let speechString = 'The incident request is raised for ticket number ' + output.ticketNumber + ' with a ' + output.severity + ' severity. It will be resolved shortly. Is there anything else I can help you with?';
-                                    callback(null, ResponseBuilderTelephony(speechString))
+                                    // let speechString = 'The incident request is raised for ticket number ' + output.ticketNumber + 'to ' + output.category + ' with a ' + output.severity + ' severity. It will be resolved shortly. Is there anything else I can help you with?';
+                                    callback(null, ResponseBuilderTelephony(IncidentResponse(output)));
                                 }
                                 else if(source == 'google'){
-                                    callback(null, ResponseBuilderGoogleAssistantCard(output));
+                                    // let speechString = 'The incident request is raised for ticket number ' + output.ticketNumber + 'to ' + output.category + ' with a ' + output.severity + ' severity. It will be resolved shortly. Is there anything else I can help you with?';
+                                    callback(null, ResponseBuilderGoogleAssistantSimpleResponse(IncidentResponse(output)));
                                 }
                             }
     
@@ -71,6 +73,11 @@ module.exports = {
     }
 }
 
+function IncidentResponse(output){
+    let speechString = 'The incident request is raised for ticket number ' + output.ticketNumber + 'to ' + output.category + ' with a ' + output.severity + ' severity. It will be resolved shortly. Is there anything else I can help you with?';
+    return speechString
+}
+
 function ResponseBuilderTelephony(data){
     console.log("Framing Telephony Speech with Data : " + data);
     return {
@@ -78,7 +85,7 @@ function ResponseBuilderTelephony(data){
     }
 }
 
-function ResponseBuilderGoogleAssistantCard(data){
+function ResponseBuilderGoogleAssistantSimpleResponse(data){
     console.log("Framing Google Assistant Card with Data : " + data);
     let card = {
         "payload": {
@@ -88,7 +95,7 @@ function ResponseBuilderGoogleAssistantCard(data){
                 "items": [
                 {
                     "simpleResponse": {
-                    "textToSpeech": "this is a simple response"
+                    "textToSpeech": data
                     }
                 }
                 ]
@@ -102,6 +109,9 @@ function ResponseBuilderGoogleAssistantCard(data){
 
 function ResponseBuilderCard(data){
     console.log("Framing Card with Data : " + JSON.stringify(data))
+    
+    let subtitleText = 'The incident request is raised to ' + output.category + ' with a ' + output.severity + ' severity. It will be resolved shortly.';
+    let statusPostback = "check status of " + data.ticketNumber;
     var card = { "result" : {
                     "fulfillment":{
                     "speech": "",
@@ -109,16 +119,12 @@ function ResponseBuilderCard(data){
                     "messages": [{
                         "type": 1,
                         "platform": "facebook",
-                        "title": "HOME BROADBAND",
-                        "subtitle": "If you're running multiple devices, part of a big family or streaming on-demand video, then Broadband & nbn™ is just the ticket for your entertainment needs!<br/><br/><br/><br/>",
+                        "title": data.ticketNumber,
+                        "subtitle": subtitleText,
                         "imageUrl": "https://smb.optus.com.au/opfiles/Shop/Consumer/Assets/Images/Broadband/broadband-NBN-landing-page-3UP.png",
                         "buttons": [{
-                            "text": "Show More",
-                            "postback": "https://www.optus.com.au/shop/broadband/home-broadband"
-                            },
-                            {
-                            "text": "Select this plan",
-                            "postback": "HOME BROADBAND"
+                            "text": "Status",
+                            "postback": statusPostback
                             }
                         ]
                     }
