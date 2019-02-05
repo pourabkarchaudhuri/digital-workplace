@@ -74,7 +74,7 @@ module.exports = {
 }
 
 function IncidentResponse(output){
-    let speechString = 'The incident request is raised for ticket number ' + output.ticketNumber + 'to ' + output.category + ' with a ' + output.severity + ' severity. It will be resolved shortly. Is there anything else I can help you with?';
+    let speechString = 'The incident request is raised for ticket number ' + output.ticketNumber + ' to ' + toUpperCase(output.category) + '  under severity level ' + output.severity + '. It will be resolved shortly. Is there anything else I can help you with?';
     return speechString
 }
 
@@ -110,8 +110,8 @@ function ResponseBuilderGoogleAssistantSimpleResponse(data){
 function ResponseBuilderCard(data){
     console.log("Framing Card with Data : " + JSON.stringify(data))
     
-    let subtitleText = 'The incident request is raised to ' + output.category + ' with a ' + output.severity + ' severity. It will be resolved shortly.';
-    let statusPostback = "check status of " + data.ticketNumber;
+    var subtitleText = 'The incident request is raised to ' + output.category + ' with a ' + output.severity + ' severity. It will be resolved shortly.';
+    var statusPostback = "check status of " + data.ticketNumber;
     var card = { "result" : {
                     "fulfillment":{
                     "speech": "",
