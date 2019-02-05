@@ -9,10 +9,10 @@ module.exports = {
 
 
         if(action == "IncidentRequest"){
-            console.log("Incident Request Intent Triggered!");
+            // console.log("Incident Request Intent Triggered!");
             
             if(!actionIncomplete){
-                console.log("Params fulfilled");
+                // console.log("Params fulfilled");
                 //Call ML Model with REST and Get its response
                 //Call Service Now with above response params
                 //Pass on required formatted response from Service Now below in 'output'
@@ -55,10 +55,6 @@ module.exports = {
                     
                 })
 
-
-
-                
-
             }
             else{
                 console.log("Asking Prompts");
@@ -79,14 +75,14 @@ function IncidentResponse(output){
 }
 
 function ResponseBuilderTelephony(data){
-    console.log("Framing Telephony Speech with Data : " + data);
+    // console.log("Framing Telephony Speech with Data : " + data);
     return {
         fulfillmentText : data
     }
 }
 
 function ResponseBuilderGoogleAssistantSimpleResponse(data){
-    console.log("Framing Google Assistant Card with Data : " + data);
+    // console.log("Framing Google Assistant Speech with Data : " + data);
     let card = {
         "payload": {
             "google": {
@@ -110,7 +106,7 @@ function ResponseBuilderGoogleAssistantSimpleResponse(data){
 function ResponseBuilderCard(data){
     console.log("Framing Card with Data : " + JSON.stringify(data))
     
-    var subtitleText = 'The incident request is raised to ' + output.category + ' with a ' + output.severity + ' severity. It will be resolved shortly.';
+    var subtitleText = 'The incident request is raised to ' + data.category + ' with a ' + data.severity + ' severity. It will be resolved shortly.';
     var statusPostback = "check status of " + data.ticketNumber;
     var card = { "result" : {
                     "fulfillment":{
