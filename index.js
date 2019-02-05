@@ -13,7 +13,6 @@ require('dotenv').config()
 
 var aiHandler = require('./services/dialogflow')
 var channelHandler = require('./src/channel');
-var webhook = require('./src/webhook');
 
 app.use(morgan('common'));
 app.use(scribe.express.logger());
