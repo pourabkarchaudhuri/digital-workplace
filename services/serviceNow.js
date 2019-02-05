@@ -25,13 +25,14 @@ module.exports = {
         json: true };
 
         request(options, function (error, response, body) {
-        if (error) {
-            callback(error, null);
-        }
+            if (error) {
+                callback(error, null);
+            }
 
-        else{
-            callback(null, body);
-        }
+            else{
+                callback(null, body);
+            }
+        })
 
     }
 }
