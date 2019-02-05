@@ -4,7 +4,7 @@ var request = require('request');
 
 module.exports = {
     'PostIncident': function(parameters, callback){
-
+        
         var options = { method: 'POST',
         url: 'https://dev65929.service-now.com/api/now/v1/table/incident',
         headers: 
@@ -30,6 +30,7 @@ module.exports = {
             }
 
             else{
+                console.log("Service Now Result : " + JSON.stringify(body));
                 callback(null, body);
             }
         })
