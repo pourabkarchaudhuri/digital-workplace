@@ -29,14 +29,15 @@ module.exports = {
                                 //Handle Error message
                             }
                             else{
-                                let output = {
+                                var output = {
                                     ticketNumber: itsmData.result.number,
                                     impact: itsmData.result.impact,
                                     severity: itsmData.result.severity,
                                     category: itsmData.result.category,
                                     subCategory: itsmData.result.subcategory
                                 }
-
+                                
+                                console.log('Output : ', output);
                                 if(source == 'API'){
                                     callback(null, ResponseBuilderCard(output))
                                 }
