@@ -15,7 +15,7 @@ module.exports = {
         body: 
         { short_description: parameters.description,
             comments: '',
-            caller_id: 'Pournima Mishra',
+            caller_id: 'Pourab Karchaudhuri',
             assigned_to: '46d44a23a9fe19810012d100cca80666',
             approval: 'requested',
             category: parameters.category,
@@ -34,6 +34,29 @@ module.exports = {
                 callback(null, body);
             }
         })
+
+    },
+
+    'GetIncident': function(parameters, callback){
+        var ticketWithPrefix = "INC" + parameters.number;
+        var options = { method: 'GET',
+        url: 'https://dev65929.service-now.com/api/now/v1/table/incident',
+        qs: { number: ticketWithPrefix },
+        headers: 
+        { 'Postman-Token': '5156c21b-c138-479a-b914-22bc0b7abe37',
+            'cache-control': 'no-cache',
+            Authorization: 'Basic YWRtaW46U2h1YmhhbUAxOTk1' } };
+
+        request(options, function (error, response, body) {
+            if (error) {
+                callback(error, null);
+            }
+
+            else{
+                console.log("Service Now Result : " + JSON.stringify(body));
+                callback(null, body);
+            }
+        });
 
     }
 }
