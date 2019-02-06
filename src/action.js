@@ -38,6 +38,7 @@ module.exports = {
                                 }
                                 
                                 console.log('Output : ', output);
+                                console.log('Source : ', source);
                                 if(source == 'API'){
                                     callback(null, ResponseBuilderCard(output))
                                 }
@@ -71,7 +72,7 @@ module.exports = {
 }
 
 function IncidentResponse(output){
-    let speechString = 'The incident request is raised for ticket number ' + output.ticketNumber + ' to ' + toUpperCase(output.category) + '  under severity level ' + output.severity + '. It will be resolved shortly. Is there anything else I can help you with?';
+    let speechString = 'The incident request is raised for ticket number ' + output.ticketNumber + ' to ' + output.category + '  under severity level ' + output.severity + '. It will be resolved shortly. Is there anything else I can help you with?';
     return speechString
 }
 
