@@ -41,24 +41,25 @@ app.get('/', function(req, res) {
 // console.warning("Hello World!");
 
 app.post('/v1/api/query', function(req, res) {
-    console.log("Incoming payload!")
-    console.log(JSON.stringify(req.body))
+    // console.log("Incoming payload!")
+    console.log("Event : " + JSON.stringify(req.body));
 
     if(req.body.hasOwnProperty('originalDetectIntentRequest')){
-      console.log('Platform Webhook Detected');
+      // console.log('Platform Webhook Detected');
 
       channelHandler.DetectChannel(req.body, 'CHANNEL', (err, result) => {
         res.json(result);
       })
     }
     else{
-      console.log("API Request Detected");
+      // console.log("API Request Detected");
       aiHandler.DialogflowAPI(req.body, (err, response)=>{
         if(err){
-          console.log("Respond with Server Unavailable");
+          console.error("Response with dialogflow unavailable");
         }
         else{
           channelHandler.DetectChannel(response, 'API', (err, result) => {
+            console.log("Response : " + JSON.stringify(result))
             res.json(result);
           })
         }

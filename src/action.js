@@ -53,7 +53,7 @@ module.exports = {
 
             }
             else{
-                console.log("Asking Prompts");
+                // console.log("Asking Prompts");
                 callback(null, event);
             }
         }
@@ -104,13 +104,13 @@ module.exports = {
                 })
             }
             else{
-                console.log("Asking Prompts");
+                // console.log("Asking Prompts");
                 callback(null, event);
             }
 
         }
         else{
-            console.log("Bypass Uninteractive Intents");
+            // console.log("Bypass Uninteractive Intents");
             callback(null, event);
         }
         //Add decision tree here for action parsing
@@ -157,7 +157,7 @@ function ResponseBuilderGoogleAssistantSimpleResponse(data){
 
 
 function IncidentCreationWebCard(data){
-    console.log("Framing Card with Data : " + JSON.stringify(data))
+    // console.log("Framing Card with Data : " + JSON.stringify(data))
     
     var subtitleText = 'The incident request is raised to ' + data.category + ' with a ' + data.severity + ' severity. It will be resolved shortly.';
     var statusPostback = "check status of " + data.ticketNumber;
@@ -199,7 +199,7 @@ function ResponseBuilderWebSimpleResponse(data){
 }
 
 function ResponseBuilderQuickReplies(data){
-    console.log("Framing Quick Replies with Data : " + JSON.stringify(data));
+    // console.log("Framing Quick Replies with Data : " + JSON.stringify(data));
         var quickReply ={ "result" : {
             "fulfillment":{
                 "speech": "",
