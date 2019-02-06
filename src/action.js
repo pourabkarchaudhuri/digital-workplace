@@ -38,7 +38,7 @@ module.exports = {
                                 }
 
                                 if(source == 'API'){
-                                    callback(null, ResponseBuilderQuickReplies(output))
+                                    callback(null, ResponseBuilderCard(output))
                                 }
                                 else if(source == 'GOOGLE_TELEPHONY'){
                                     // let speechString = 'The incident request is raised for ticket number ' + output.ticketNumber + 'to ' + output.category + ' with a ' + output.severity + ' severity. It will be resolved shortly. Is there anything else I can help you with?';
