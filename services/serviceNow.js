@@ -19,7 +19,7 @@ module.exports = {
             assigned_to: '46d44a23a9fe19810012d100cca80666',
             approval: 'requested',
             category: parameters.category,
-            subcategory: parameters.sub_category,
+            subcategory: parameters.sub_category1,
             impact: parameters.impact,
             urgency: parameters.urgency },
         json: true };

@@ -75,14 +75,14 @@ function IncidentResponse(output){
 }
 
 function ResponseBuilderTelephony(data){
-    // console.log("Framing Telephony Speech with Data : " + data);
+    console.log("Framing Telephony Speech with Data : " + data);
     return {
         fulfillmentText : data
     }
 }
 
 function ResponseBuilderGoogleAssistantSimpleResponse(data){
-    // console.log("Framing Google Assistant Speech with Data : " + data);
+    console.log("Framing Google Assistant Speech with Data : " + data);
     let card = {
         "payload": {
             "google": {
