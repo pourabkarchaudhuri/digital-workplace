@@ -2,6 +2,7 @@ var natural = require('natural');
 
 module.exports = {
   "StringDistance": (input, body, cb) => {
+    
     let highTotal = 0;
     let higestMatchedIncident = 0;
     let incidentDescription = null;

@@ -21,9 +21,11 @@ module.exports = {
                         jaroWrinklerHandler.StringDistance(parameters, itsmData, (err, distanceResult) => {
                             if(err){
                                 //Handle Jaro Wrinkler Handler err
+                                
                             }
                             else{
-                                
+                                console.log("Input : ", parameters.desc);
+                                console.log("Jaro Wrinkler Results : " + JSON.stringify(distanceResult));
                                 if(distanceResult.matched){
                                     //true
                                     //No ML
