@@ -37,9 +37,9 @@ module.exports = {
 
     },
 
-    'GetIncident': function(parameters, callback){
+    'GetIncident': function(number, callback){
 
-        var ticketWithPrefix = "INC" + parameters.number;
+        var ticketWithPrefix = "INC" + number;
         var options = { method: 'GET',
         url: 'https://dev65929.service-now.com/api/now/v1/table/incident',
         qs: { number: ticketWithPrefix },

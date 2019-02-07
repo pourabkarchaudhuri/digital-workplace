@@ -108,7 +108,12 @@ module.exports = {
 
             if(!actionIncomplete){
 
-                itsmHandler.GetIncident(parameters, (err, itsmData) => {
+                var number;
+                if(source != API){
+                    number = event.queryResult.queryText.replace(/[^0-9]/g, "");
+                    number = number.replace(/ /g, "");
+                }
+                itsmHandler.GetIncident(number, (err, itsmData) => {
 
                     if(err){
                         //Handler err
