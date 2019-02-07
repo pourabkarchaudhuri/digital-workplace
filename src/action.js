@@ -121,35 +121,49 @@ module.exports = {
 
                     else{
                         
-                        var ticketActivity;
-                        if(itsmData.result.active == "true"){
-                            ticketActivity = "active"
+                        if(itsmData.hasOwnProperty('error')){
+                            if(source == 'API'){
+                                callback(null, ResponseBuilderWebSimpleResponse(IncidentFetch(output)))
+                            }
+                            else if(source == 'GOOGLE_TELEPHONY'){
+                                // let speechString = 'The incident request is raised for ticket number ' + output.ticketNumber + 'to ' + output.category + ' with a ' + output.severity + ' severity. It will be resolved shortly. Is there anything else I can help you with?';
+                                callback(null, ResponseBuilderTelephony(IncidentFetchNoResult()));
+                            }
+                            else if(source == 'google'){
+                                // let speechString = 'The incident request is raised for ticket number ' + output.ticketNumber + 'to ' + output.category + ' with a ' + output.severity + ' severity. It will be resolved shortly. Is there anything else I can help you with?';
+                                callback(null, ResponseBuilderGoogleAssistantSimpleResponse(IncidentFetchNoResult()));
+                            }
                         }
                         else{
-                            ticketActivity = "closed"
-                        }
-                        var output = {
-                            ticketNumber: itsmData.result.number,
-                            impact: itsmData.result.impact,
-                            severity: itsmData.result.severity,
-                            category: itsmData.result.category,
-                            subCategory: itsmData.result.subcategory,
-                            description: itsmData.result.short_description,
-                            activity: ticketActivity
-                        }
+                            var ticketActivity;
+                            if(itsmData.result.active == "true"){
+                                ticketActivity = "active"
+                            }
+                            else{
+                                ticketActivity = "closed"
+                            }
+                            var output = {
+                                ticketNumber: itsmData.result.number,
+                                impact: itsmData.result.impact,
+                                severity: itsmData.result.severity,
+                                category: itsmData.result.category,
+                                subCategory: itsmData.result.subcategory,
+                                description: itsmData.result.short_description,
+                                activity: ticketActivity
+                            }
 
-                        if(source == 'API'){
-                            callback(null, ResponseBuilderWebSimpleResponse(IncidentFetch(output)))
+                            if(source == 'API'){
+                                callback(null, ResponseBuilderWebSimpleResponse(IncidentFetch(output)))
+                            }
+                            else if(source == 'GOOGLE_TELEPHONY'){
+                                // let speechString = 'The incident request is raised for ticket number ' + output.ticketNumber + 'to ' + output.category + ' with a ' + output.severity + ' severity. It will be resolved shortly. Is there anything else I can help you with?';
+                                callback(null, ResponseBuilderTelephony(IncidentFetch(output)));
+                            }
+                            else if(source == 'google'){
+                                // let speechString = 'The incident request is raised for ticket number ' + output.ticketNumber + 'to ' + output.category + ' with a ' + output.severity + ' severity. It will be resolved shortly. Is there anything else I can help you with?';
+                                callback(null, ResponseBuilderGoogleAssistantSimpleResponse(IncidentFetch(output)));
+                            }
                         }
-                        else if(source == 'GOOGLE_TELEPHONY'){
-                            // let speechString = 'The incident request is raised for ticket number ' + output.ticketNumber + 'to ' + output.category + ' with a ' + output.severity + ' severity. It will be resolved shortly. Is there anything else I can help you with?';
-                            callback(null, ResponseBuilderTelephony(IncidentFetch(output)));
-                        }
-                        else if(source == 'google'){
-                            // let speechString = 'The incident request is raised for ticket number ' + output.ticketNumber + 'to ' + output.category + ' with a ' + output.severity + ' severity. It will be resolved shortly. Is there anything else I can help you with?';
-                            callback(null, ResponseBuilderGoogleAssistantSimpleResponse(IncidentFetch(output)));
-                        }
-
                     }
 
                 })
@@ -166,6 +180,11 @@ module.exports = {
         }
         //Add decision tree here for action parsing
     }
+}
+
+function IncidentFetchNoResult(){
+    let speechString = 'There currently no tickets with that number. Do you want to try again?';
+    return speechString
 }
 
 function IncidentUpdate(output){
