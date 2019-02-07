@@ -87,5 +87,33 @@ module.exports = {
                 callback(null, body);
             }
         });
+    },
+
+    'PutIncident': function(parameters, callback){
+
+        let url = 'https://dev65929.service-now.com/api/now/table/incident/';
+        let completeURL = url + parameters.sys_id;
+
+        var options = { method: 'PUT',
+        url: completeURL,
+        headers: 
+        { 'Postman-Token': 'f625c4cf-b49c-432a-bebb-4d08e8d73ee3',
+            'Cache-Control': 'no-cache',
+            Authorization: 'Basic cG91cmFiLmthcmNoYXVkaHVyaTpwb3VyYWI=',
+            'Content-Type': 'application/json' },
+        body: { comments: 'Gentle reminder. Please follow up this ticket and resolve this quickly' },
+        json: true };
+
+        request(options, function (error, response, body) {
+            if (error) {
+                callback(error, null);
+            }
+
+            else{
+                //console.log("Service Now All Fetch Result : " + JSON.stringify(body));
+                console.log("Put response : ", JSON.stringify(body));
+                callback(null, body);
+            }
+        });
     }
 }

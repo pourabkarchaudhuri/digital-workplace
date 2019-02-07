@@ -31,6 +31,24 @@ module.exports = {
                                     //No ML
                                     //PUT
                                     console.log('PUT REQUEST TO be implemented');
+                                    itsmHandler.PutIncident(distanceResult.result, (err, result) => {
+
+                                        var output = {
+                                            ticketNumber: distanceResult.result.incidentNumber,
+                                            description: distanceResult.result.incidentDescription
+                                        }
+                                        if(source == 'API'){
+                                            callback(null, IncidentCreationWebCard(output))
+                                        }
+                                        else if(source == 'GOOGLE_TELEPHONY'){
+                                            // let speechString = 'The incident request is raised for ticket number ' + output.ticketNumber + 'to ' + output.category + ' with a ' + output.severity + ' severity. It will be resolved shortly. Is there anything else I can help you with?';
+                                            callback(null, ResponseBuilderTelephony(IncidentUpdate(output)));
+                                        }
+                                        else if(source == 'google'){
+                                            // let speechString = 'The incident request is raised for ticket number ' + output.ticketNumber + 'to ' + output.category + ' with a ' + output.severity + ' severity. It will be resolved shortly. Is there anything else I can help you with?';
+                                            callback(null, ResponseBuilderGoogleAssistantSimpleResponse(IncidentUpdate(output)));
+                                        }
+                                    })
                                 }
                                 else{
                                     //false = no match
@@ -143,6 +161,11 @@ module.exports = {
         }
         //Add decision tree here for action parsing
     }
+}
+
+function IncidentUpdate(output){
+    let speechString = 'I found an existing ticket The incident request ' + output.ticketNumber + ' with description, ' + output.description + '. I have added a comment on this ticket giving a gentle reminder to help resolve it quickly. Is there anything else I can help you with?';
+    return speechString
 }
 
 function IncidentFetch(output){
