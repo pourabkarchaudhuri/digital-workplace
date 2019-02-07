@@ -185,12 +185,10 @@ module.exports = {
                 callback(null, 
                                 { "result" : {
                                     "fulfillment":{
-                                    "speech": "Helo",
-                                    "displayText": "Hello",
                                     "messages": [{
                                         "type": 0,
                                         "platform": "facebook",
-                                        "speech": "Heelo"
+                                        "speech": "Simple Response"
                                     }
                                 ]
                             }        
