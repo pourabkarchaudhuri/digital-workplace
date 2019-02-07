@@ -9,7 +9,7 @@ module.exports = {
     let matchFlag = false;
     let response = {};
       body.result.forEach((element, index) => {
-        if (natural.JaroWinklerDistance(input.desc, element.short_description) >= 0.75) {
+        if (natural.JaroWinklerDistance(input.desc, element.short_description) >= 0.90) {
           matchFlag = true;
           if (highTotal < natural.JaroWinklerDistance(input.desc, element.short_description)) {
             highTotal = natural.JaroWinklerDistance(input.desc, element.short_description);
