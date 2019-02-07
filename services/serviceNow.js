@@ -10,7 +10,7 @@ module.exports = {
         headers: 
         { 'Postman-Token': '5bbb2cc6-60f8-41e9-abc5-46b5d66c7038',
             'Cache-Control': 'no-cache',
-            Authorization: 'Basic cG91cm5pbWEubWlzaHJhOnBvdXJuaW1h',
+            Authorization: 'Basic cG91cmFiLmthcmNoYXVkaHVyaTpwb3VyYWI=',
             'Content-Type': 'application/json' },
         body: 
         { short_description: parameters.description,
@@ -46,7 +46,7 @@ module.exports = {
         headers: 
         { 'Postman-Token': '5156c21b-c138-479a-b914-22bc0b7abe37',
             'cache-control': 'no-cache',
-            Authorization: 'Basic cG91cm5pbWEubWlzaHJhOnBvdXJuaW1h' },
+            Authorization: 'Basic cG91cmFiLmthcmNoYXVkaHVyaTpwb3VyYWI=' },
             json: true 
         };
 
@@ -67,10 +67,13 @@ module.exports = {
 
         var options = { method: 'GET',
         url: 'https://dev65929.service-now.com/api/now/v1/table/incident',
+        qs:{
+            active:'true'
+        },
         headers: 
         { 'Postman-Token': '5156c21b-c138-479a-b914-22bc0b7abe37',
             'cache-control': 'no-cache',
-            Authorization: 'Basic cG91cm5pbWEubWlzaHJhOnBvdXJuaW1h' },
+            Authorization: 'Basic cG91cmFiLmthcmNoYXVkaHVyaTpwb3VyYWI=' },
             json: true };
 
         request(options, function (error, response, body) {
@@ -80,6 +83,7 @@ module.exports = {
 
             else{
                 //console.log("Service Now All Fetch Result : " + JSON.stringify(body));
+                console.log("No. of Not Closed Tickets : ", body.result.length);
                 callback(null, body);
             }
         });
