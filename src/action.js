@@ -1,5 +1,6 @@
 var classifierHandler = require('../services/ticketClassifier');
 var itsmHandler = require('../services/serviceNow');
+var jaroWrinklerHandler = require('../nlp/jaroWrinkler');
 
 module.exports = {
     'ActionTrigger': function(event, action, actionIncomplete, parameters, source, callback){
@@ -11,46 +12,71 @@ module.exports = {
             
             if(!actionIncomplete){
 
-                classifierHandler.GetClassification(parameters, (err, classifiedData) => {
-
+                itsmHandler.GetAllIncident((err, itsmData) => {
                     if(err){
-                        //Handle Error Message
-                        
+                        //Handle Service Now Call err
                     }
                     else{
-                        itsmHandler.PostIncident(classifiedData, (err, itsmData) => {
+
+                        jaroWrinklerHandler.StringDistance(parameters, itsmData, (err, distanceResult) => {
                             if(err){
-                                //Handle Error message
+                                //Handle Jaro Wrinkler Handler err
                             }
                             else{
-                                var output = {
-                                    ticketNumber: itsmData.result.number,
-                                    impact: itsmData.result.impact,
-                                    severity: itsmData.result.severity,
-                                    category: itsmData.result.category,
-                                    subCategory: itsmData.result.subcategory
-                                }
                                 
-                                console.log('Output : ', output);
-                                console.log('Source : ', source);
-                                if(source == 'API'){
-                                    callback(null, IncidentCreationWebCard(output))
+                                if(distanceResult.matched){
+                                    //true
+                                    //No ML
+                                    //PUT
+                                    console.log('PUT REQUEST TO be implemented');
                                 }
-                                else if(source == 'GOOGLE_TELEPHONY'){
-                                    // let speechString = 'The incident request is raised for ticket number ' + output.ticketNumber + 'to ' + output.category + ' with a ' + output.severity + ' severity. It will be resolved shortly. Is there anything else I can help you with?';
-                                    callback(null, ResponseBuilderTelephony(IncidentCreation(output)));
-                                }
-                                else if(source == 'google'){
-                                    // let speechString = 'The incident request is raised for ticket number ' + output.ticketNumber + 'to ' + output.category + ' with a ' + output.severity + ' severity. It will be resolved shortly. Is there anything else I can help you with?';
-                                    callback(null, ResponseBuilderGoogleAssistantSimpleResponse(IncidentCreation(output)));
+                                else{
+                                    //false = no match
+                                    classifierHandler.GetClassification(parameters, (err, classifiedData) => {
+
+                                        if(err){
+                                            //Handle Error Message
+                                            
+                                        }
+                                        else{
+                                            itsmHandler.PostIncident(classifiedData, (err, itsmData) => {
+                                                if(err){
+                                                    //Handle Error message
+                                                }
+                                                else{
+                                                    var output = {
+                                                        ticketNumber: itsmData.result.number,
+                                                        impact: itsmData.result.impact,
+                                                        severity: itsmData.result.severity,
+                                                        category: itsmData.result.category,
+                                                        subCategory: itsmData.result.subcategory
+                                                    }
+                                                    
+                                                    console.log('Output : ', output);
+                                                    console.log('Source : ', source);
+                                                    if(source == 'API'){
+                                                        callback(null, IncidentCreationWebCard(output))
+                                                    }
+                                                    else if(source == 'GOOGLE_TELEPHONY'){
+                                                        // let speechString = 'The incident request is raised for ticket number ' + output.ticketNumber + 'to ' + output.category + ' with a ' + output.severity + ' severity. It will be resolved shortly. Is there anything else I can help you with?';
+                                                        callback(null, ResponseBuilderTelephony(IncidentCreation(output)));
+                                                    }
+                                                    else if(source == 'google'){
+                                                        // let speechString = 'The incident request is raised for ticket number ' + output.ticketNumber + 'to ' + output.category + ' with a ' + output.severity + ' severity. It will be resolved shortly. Is there anything else I can help you with?';
+                                                        callback(null, ResponseBuilderGoogleAssistantSimpleResponse(IncidentCreation(output)));
+                                                    }
+                                                }
+                        
+                                            })
+                                        }
+                                        
+                                    })
                                 }
                             }
-    
                         })
                     }
                     
                 })
-
             }
             else{
                 // console.log("Asking Prompts");

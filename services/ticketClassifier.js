@@ -4,7 +4,7 @@ var request = require("request");
 
 module.exports = {
     'GetClassification': function(parameters, callback){
-        console.log("Desscription Input : ", parameters.desc);
+        console.log("Description Input : ", parameters.desc);
         var options = { method: 'POST',
         url: 'https://oou69odffl.execute-api.ap-south-1.amazonaws.com/v1/predict',
         headers: 
