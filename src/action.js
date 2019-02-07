@@ -137,6 +137,7 @@ module.exports = {
                             }
                         }
                         else{
+                            console.log("Service Now Fetch Result : " + JSON.stringify(itsmData.result[0]));
                             var ticketActivity;
                             if(itsmData.result[0].active == "true"){
                                 ticketActivity = "active"

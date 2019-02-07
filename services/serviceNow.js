@@ -56,7 +56,7 @@ module.exports = {
             }
 
             else{
-                console.log("Service Now Fetch Result : " + JSON.stringify(body));
+                // console.log("Service Now Fetch Result : " + JSON.stringify(body));
                 callback(null, body);
             }
         });
