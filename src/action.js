@@ -114,6 +114,7 @@ module.exports = {
                     number = number.replace(/ /g, "");
                 }
                 else if(source == "API"){
+                    console.log("Query : ", event.query);
                     number = event.query.replace(/[^0-9]/g, "");
                     number = number.replace(/ /g, "");
                 }
