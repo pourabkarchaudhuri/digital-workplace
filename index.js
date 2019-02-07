@@ -80,9 +80,9 @@ app.get('/v1/api/metrics', function(req, res) {
       cpu: os.cpus(),
       osType: os.type(),
       platform: os.platform(),
-      totalMemory: (os.totalmem()/1048576).toFixed(2) + " MB",
-      freeMemory: (os.freemem()/1048576).toFixed(2) + " MB",
-      systemUptime: os.uptime().toFixed(2) + " s" ,
+      totalMemory: (os.totalmem()/1048576).toFixed(2) + "MB",
+      freeMemory: (os.freemem()/1048576).toFixed(2) + "MB",
+      systemUptime: os.uptime().toFixed(2) + "s" ,
       network: os.networkInterfaces()
     })
 });
