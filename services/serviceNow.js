@@ -79,7 +79,7 @@ module.exports = {
             }
 
             else{
-                console.log("Service Now All Fetch Result : " + JSON.stringify(body));
+                //console.log("Service Now All Fetch Result : " + JSON.stringify(body));
                 callback(null, body);
             }
         });
