@@ -3,7 +3,8 @@ var http = require('http');
 var express = require('express');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
-
+var dash = require('appmetrics-dash');
+var appMetrics = require('appmetrics');
 var scribe = require('scribe-js')(),
     app    = express();
 
@@ -25,6 +26,8 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.use(bodyParser.json({
     limit: "50mb"
 }))
+
+dash.monitor(appMetrics);
 
 var console = process.console;
 
