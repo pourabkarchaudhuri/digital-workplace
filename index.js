@@ -79,7 +79,6 @@ app.get('/v1/api/metrics', function(req, res) {
       hostname: os.hostname(),
       osType: os.type(),
       platform: os.platform(),
-      loadAverage: osutils.loadavg(5),
       totalMemory: (os.totalmem()/1048576).toFixed(2) + " MB",
       freeMemory: (os.freemem()/1048576).toFixed(2) + " MB",
       systemUptime: os.uptime().toFixed(2) + " s" 
