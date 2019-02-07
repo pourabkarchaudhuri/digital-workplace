@@ -138,19 +138,19 @@ module.exports = {
                         }
                         else{
                             var ticketActivity;
-                            if(itsmData.result.active == "true"){
+                            if(itsmData.result[0].active == "true"){
                                 ticketActivity = "active"
                             }
                             else{
                                 ticketActivity = "closed"
                             }
                             var output = {
-                                ticketNumber: itsmData.result.number,
-                                impact: itsmData.result.impact,
-                                severity: itsmData.result.severity,
-                                category: itsmData.result.category,
-                                subCategory: itsmData.result.subcategory,
-                                description: itsmData.result.short_description,
+                                ticketNumber: itsmData.result[0].number,
+                                impact: itsmData.result[0].impact,
+                                severity: itsmData.result[0].severity,
+                                category: itsmData.result[0].category,
+                                subCategory: itsmData.result[0].subcategory,
+                                description: itsmData.result[0].short_description,
                                 activity: ticketActivity
                             }
 
