@@ -154,6 +154,7 @@ module.exports = {
                                 activity: ticketActivity
                             }
 
+                            console.log("Output : ", output);
                             if(source == 'API'){
                                 callback(null, ResponseBuilderWebSimpleResponse(IncidentFetch(output)))
                             }
