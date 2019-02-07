@@ -125,7 +125,7 @@ module.exports = {
                         
                         if(itsmData.hasOwnProperty('error')){
                             if(source == 'API'){
-                                callback(null, ResponseBuilderWebSimpleResponse(IncidentFetch(output)))
+                                callback(null, ResponseBuilderWebSimpleResponse(IncidentFetchNoResult()));
                             }
                             else if(source == 'GOOGLE_TELEPHONY'){
                                 // let speechString = 'The incident request is raised for ticket number ' + output.ticketNumber + 'to ' + output.category + ' with a ' + output.severity + ' severity. It will be resolved shortly. Is there anything else I can help you with?';
@@ -179,28 +179,6 @@ module.exports = {
 
         }
 
-        else if(action == "TestIntent"){
-            if(!actionIncomplete){
-                console.log("Test Intent Invoked");
-                callback(null, 
-                                { "result" : {
-                                    "fulfillment":{
-                                    "messages": [{
-                                        "type": 0,
-                                        "platform": "facebook",
-                                        "speech": "Simple Response"
-                                    }
-                                ]
-                            }        
-                        }
-                    }
-                )
-            }
-            else{
-                //Ask prompts
-                callback(null, event);
-            }
-        }
         else{
             // console.log("Bypass Uninteractive Intents");
             callback(null, event);
@@ -208,6 +186,8 @@ module.exports = {
         //Add decision tree here for action parsing
     }
 }
+
+
 
 function IncidentFetchNoResult(){
     let speechString = 'There currently no tickets with that number. Do you want to try again?';
@@ -233,6 +213,22 @@ function ResponseBuilderTelephony(data){
     // console.log("Framing Telephony Speech with Data : " + data);
     return {
         fulfillmentText : data
+    }
+}
+
+function ResponseBuilderWebSimpleResponse(data){
+    return {
+             "result" : {
+                "fulfillment":{
+                "messages": [{
+                    "type": 0,
+                    "platform": "facebook",
+                    "speech": data
+                    }
+                ]
+            }        
+        }
+    
     }
 }
 
@@ -287,18 +283,6 @@ function IncidentCreationWebCard(data){
     return card;
 }
 
-function ResponseBuilderWebSimpleResponse(data){
-    var text = { 
-        "result" : {
-            "fulfillment":{
-            "speech": data,
-            "displayText": data
-            }
-        }
-    }
-
-    return text
-}
 
 function ResponseBuilderQuickReplies(data){
     // console.log("Framing Quick Replies with Data : " + JSON.stringify(data));
