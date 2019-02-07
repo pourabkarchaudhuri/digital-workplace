@@ -109,10 +109,12 @@ module.exports = {
             if(!actionIncomplete){
 
                 var number;
-                if(source != API){
+                if(source != 'API'){
                     number = event.queryResult.queryText.replace(/[^0-9]/g, "");
                     number = number.replace(/ /g, "");
                 }
+                
+                console.log('Number Obtained : ', number);
                 itsmHandler.GetIncident(number, (err, itsmData) => {
 
                     if(err){
