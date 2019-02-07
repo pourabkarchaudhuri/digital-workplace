@@ -7,7 +7,6 @@ module.exports = {
     let incidentDescription = null;
     let matchFlag = false;
     let response = {};
-
       body.result.forEach((element, index) => {
         if (natural.JaroWinklerDistance(input.desc, element.short_description) >= 0.75) {
           matchFlag = true;
