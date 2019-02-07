@@ -6,7 +6,7 @@ var bodyParser = require('body-parser');
 var morgan = require('morgan');
 var dash = require('appmetrics-dash');
 var appMetrics = require('appmetrics');
-// var osutils = require('os-utils');
+
 var scribe = require('scribe-js')(),
     app    = express();
 
@@ -73,19 +73,18 @@ app.post('/v1/api/query', function(req, res) {
     
 });
 
-// app.get('/v1/api/metrics', function(req, res) {
+app.get('/v1/api/metrics', function(req, res) {
 
-//     res.json({
-//       hostname: os.hostname(),
-//       osType: os.type(),
-//       platform: osutils.platform(),
-//       loadAverage: osutils.loadavg(5),
-//       totalMemory: osutils.totalmem().toFixed(2) + " MB",
-//       freeMemory: osutils.freemem().toFixed(2) + " MB",
-//       freeMemoryPercentage: osutils.freememPercentage().toFixed(2) + " %",
-//       systemUptime: osutils.sysUptime().toFixed(2) + " ms" 
-//     })
-// });
+    res.json({
+      hostname: os.hostname(),
+      osType: os.type(),
+      platform: osutils.platform(),
+      loadAverage: osutils.loadavg(5),
+      totalMemory: (os.totalmem()/1048576).toFixed(2) + " MB",
+      freeMemory: (os.freemem()/1048576).toFixed(2) + " MB",
+      systemUptime: os.uptime().toFixed(2) + " s" 
+    })
+});
 app.listen(port);
 console.log("Server started successfully at PORT : " + port);
 //module.exports=app;
