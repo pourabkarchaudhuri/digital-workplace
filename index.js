@@ -78,7 +78,7 @@ app.get('/v1/api/metrics', function(req, res) {
     res.json({
       hostname: os.hostname(),
       osType: os.type(),
-      platform: osutils.platform(),
+      platform: os.platform(),
       loadAverage: osutils.loadavg(5),
       totalMemory: (os.totalmem()/1048576).toFixed(2) + " MB",
       freeMemory: (os.freemem()/1048576).toFixed(2) + " MB",
