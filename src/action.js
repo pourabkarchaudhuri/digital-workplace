@@ -178,6 +178,31 @@ module.exports = {
             }
 
         }
+
+        else if(action == "TestIntent"){
+            if(!actionIncomplete){
+                console.log("Test Intent Invoked");
+                callback(null, 
+                                { "result" : {
+                                    "fulfillment":{
+                                    "speech": "Helo",
+                                    "displayText": "Hello",
+                                    "messages": [{
+                                        "type": 0,
+                                        "platform": "facebook",
+                                        "speech": "Heelo"
+                                    }
+                                ]
+                            }        
+                        }
+                    }
+                )
+            }
+            else{
+                //Ask prompts
+                callback(null, event);
+            }
+        }
         else{
             // console.log("Bypass Uninteractive Intents");
             callback(null, event);
